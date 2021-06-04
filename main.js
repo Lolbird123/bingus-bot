@@ -17,8 +17,6 @@ client.on('ready', () => {
 
 client.on('message', msg => {
 	if(msg.author.bot || msg.channel.type === 'dm') return;
-	if(msg.content.toLowerCase().includes('lolbird')) client.users.fetch(owner).then(u => {u.send(`https://discord.com/channels/${msg.guild.id}/${msg.channel.id}/${msg.id}`)});
-
 	if(msg.content.toLowerCase().includes(prefix)) {
 		var args = msg.content.slice(prefix.length).split(' ');
 		var cmd = args.shift();
