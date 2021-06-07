@@ -17,6 +17,7 @@ client.on('ready', () => {
 
 client.on('message', msg => {
 	if(msg.author.bot || msg.channel.type === 'dm') return;
+
 	if(msg.content.toLowerCase().includes(prefix)) {
 		var args = msg.content.slice(prefix.length).split(' ');
 		var cmd = args.shift();
@@ -36,9 +37,9 @@ client.on('message', msg => {
 				.addField(`${prefix}binguspet`, 'Pet it.', true)
 				.addField(`${prefix}praise`, 'Praise the bingus.', true)
 				.addField(`${prefix}rank (user)`, 'Get a users rank by id, or your own if none given', true)
-                .addField(`${prefix}remind <time in seconds> <reminder text>`, 'Creates a reminder.', true)
-			    .addField(`${prefix}del-remind <reminder id>`, 'Delets a reminder.', true)
-			    .addField(`${prefix}reminders`, 'Lists reminders.', true)
+                		.addField(`${prefix}remind <time> <reminder text>`, 'Creates a reminder.', true)
+			        .addField(`${prefix}del-remind <reminder id>`, 'Delets a reminder.', true)
+			        .addField(`${prefix}reminders`, 'Lists reminders.', true)
 				.addField(`${prefix}invite`, 'Invite me to your server.', true);
 				msg.channel.send({embed: embed});
 			break;
@@ -93,23 +94,37 @@ client.on('message', msg => {
 			break;
 
             case 'remind':
-			    var time = args.shift().replace(/[^0-9]/g, '');
+			    var timeIn = args.shift();
 			    var text = args.join(' ');
-			    var reminder = {
-				    id: reminders.nextId,
-				    owner: msg.author.id,
-				    channel: msg.channel.id,
-				    message: text,
-				    time: time
-			    };
+			    var timeChar = timeIn.split('').pop();
+			    var time = timeIn.replace(/[^0-9]/g, '');
 
-			    if(time < 1) {
-				    msg.channel.send('There is something wrong with the inputted time.');
+			    switch(timeChar) {
+			 	case 's': break;
+				case 'm': time=time*60; break;
+				case 'h': time=time*60*60; break;
+				case 'd': time=time*60*60*24; break;
+				case 'w': time=time*60*60*24*7; break;
+				case 'y': time=time*60*60*24*30*12; break;
+				default:
+					msg.channel.send('Time format examples: 5s 10m 1d');
+					return;
+				break;
+			    }
+
+			    if(text > 1500) {
+				    msg.channel.send('Max reminder text length is 1500 characters.');
 				    return;
 			    }
 
+			    reminders.entries.push({
+				id: reminders.nextId,
+				owner: msg.author.id,
+				message: text,
+				channel: msg.channel.id,
+				time: time
+			    });
 			    reminders.nextId++;
-			    reminders.entries.push(reminder);
 			    msg.react('✅');
 			    writeReminders();
 		    break;
@@ -144,7 +159,11 @@ client.on('message', msg => {
 				    reminds.forEach(r => {
 					    list += `${r.id} in <#${r.channel}> in ${r.time} seconds: ${r.message}\n`;
 				    });
-				    msg.channel.send(list);
+				    if(msg.channel.permissionsFor(msg.member.id).has('EMBED_LINKS')) {
+					msg.channel.send(list, {disableMentions: 'everyone'});
+				    } else {
+					msg.channel.send(list, {disableMentions: 'everyone'}).then(m => {m.suppressEmbeds()});
+				    }
 			    } else {
 				    msg.channel.send('None.');
 			    }
@@ -210,7 +229,11 @@ setInterval(() => {
 	reminders.entries.forEach(r => {
 		if(r.time <= 0) {
 			client.channels.fetch(r.channel).then(c => {
-				c.send(`<@!${r.owner}> you are being reminded to: ${r.message}`);
+				if(c.permissionsFor(r.owner).has('EMBED_LINKS')) {
+					c.send(`<@!${r.owner}> you are being reminded to: ${r.message}`, {disableMentions: 'everyone'});
+				} else {
+					c.send(`<@!${r.owner}> you are being reminded to: ${r.message}`, {disableMentions: 'everyone'}).then(m => {m.suppressEmbeds()});
+				}
 			});
 			reminders.entries = reminders.entries.filter(rt => {
 				if(rt.id != r.id) return rt;
