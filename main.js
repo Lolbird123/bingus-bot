@@ -17,7 +17,7 @@ client.on('ready', () => {
 
 client.on('message', msg => {
 	if(msg.author.bot || msg.channel.type === 'dm') return;
-
+	
 	if(msg.content.toLowerCase().includes(prefix)) {
 		var args = msg.content.slice(prefix.length).split(' ');
 		var cmd = args.shift();
@@ -160,9 +160,9 @@ client.on('message', msg => {
 					    list += `${r.id} in <#${r.channel}> in ${r.time} seconds: ${r.message}\n`;
 				    });
 				    if(msg.channel.permissionsFor(msg.member.id).has('EMBED_LINKS')) {
-					msg.channel.send(list, {disableMentions: 'everyone'});
+					msg.channel.send(list, {allowedMentions: {users: [msg.author.id]}});
 				    } else {
-					msg.channel.send(list, {disableMentions: 'everyone'}).then(m => {m.suppressEmbeds()});
+					msg.channel.send(list, {allowedMentions: {users: [msg.author.id]}}).then(m => {m.suppressEmbeds()});
 				    }
 			    } else {
 				    msg.channel.send('None.');
@@ -230,9 +230,9 @@ setInterval(() => {
 		if(r.time <= 0) {
 			client.channels.fetch(r.channel).then(c => {
 				if(c.permissionsFor(r.owner).has('EMBED_LINKS')) {
-					c.send(`<@!${r.owner}> you are being reminded to: ${r.message}`, {disableMentions: 'everyone'});
+					c.send(`<@!${r.owner}> you are being reminded to: ${r.message}`, {allowedMentions: {users: [r.owner]}});
 				} else {
-					c.send(`<@!${r.owner}> you are being reminded to: ${r.message}`, {disableMentions: 'everyone'}).then(m => {m.suppressEmbeds()});
+					c.send(`<@!${r.owner}> you are being reminded to: ${r.message}`, {allowedMentions: {users: [r.owner]}}).then(m => {m.suppressEmbeds()});
 				}
 			});
 			reminders.entries = reminders.entries.filter(rt => {
