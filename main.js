@@ -1,4 +1,5 @@
 const fs = require('fs');
+const exec = require('child_process').exec;
 const Discord = require('discord.js');
 const client = new Discord.Client();
 const config = require('./config.json');
@@ -17,7 +18,7 @@ client.on('ready', () => {
 
 client.on('message', msg => {
 	if(msg.author.bot || msg.channel.type === 'dm') return;
-	
+
 	if(msg.content.toLowerCase().includes(prefix)) {
 		var args = msg.content.slice(prefix.length).split(' ');
 		var cmd = args.shift();
@@ -183,6 +184,23 @@ client.on('message', msg => {
 					} catch(e) {
 						msg.channel.send(`\`\`\`\n${e}\n\`\`\``);
 					}
+				} else {
+					msg.channel.send('no');
+				}
+			break;
+
+			case 'bash':
+				if(msg.author.id === owner) {
+					var code = args.join(' ');
+
+					exec(code, (err, stdout, stderr) => {
+						if(err) msg.channel.send(`\`\`\`\n${err}\n\`\`\``);
+						if(stdout) {
+							msg.channel.send(`\`\`\`\n${stdout}\n\`\`\``);
+						} else if (!err){
+							msg.react('✅');
+						}
+					});
 				} else {
 					msg.channel.send('no');
 				}
