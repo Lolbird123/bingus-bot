@@ -12,7 +12,7 @@ const server = config.server;
 
 client.on('ready', () => {
 	client.channels.fetch(config.channel).then(c => {c.join();});
-	client.user.setActivity(`with bingus | ${prefix}help`);
+	client.user.setActivity(`with bingus | ${prefix}help | PFP Made By Sock#6370`);
 	console.log('Bingus my beloved <3');
 });
 
