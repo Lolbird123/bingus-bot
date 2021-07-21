@@ -36,6 +36,7 @@ client.on('message', msg => {
 				.addField(`${prefix}members`, 'Shows the current membercount. (Not always accurate)', true)
 				.addField(`${prefix}servers`, 'Shows the bots server count.', true)
 				.addField(`${prefix}binguspet`, 'Pet it.', true)
+				.addField(`${prefix}dance`, 'Binglet dance.', true)
 				.addField(`${prefix}praise`, 'Praise the bingus.', true)
 				.addField(`${prefix}rank (user)`, 'Get a users rank by id, or your own if none given', true)
                 		.addField(`${prefix}remind <time> <reminder text>`, 'Creates a reminder.', true)
@@ -68,6 +69,10 @@ client.on('message', msg => {
 
 			case 'binguspet':
 				msg.channel.send('<a:bingusPet:764106511398993941>');
+			break;
+
+			case 'dance':
+				msg.channel.send({files: [{attachment: '/home/pi/Videos/binglet-dance.mp4'}]});
 			break;
 
 			case 'praise':
