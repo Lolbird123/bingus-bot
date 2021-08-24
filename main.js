@@ -239,6 +239,16 @@ client.on('message', msg => {
 	}
 });
 
+client.on('messageDelete', (msg) => {
+	if(msg.channel.type !== 'dm' && !msg.author.bot) {
+		if(msg.guild.id === server) {
+			client.channels.fetch(config.messageLogChannel).then(c => {
+				c.send(`Message from ${msg.author.tag} (${msg.author.id}) deleted in <#${msg.channel.id}> (${msg.channel.id}) with an id of ${msg.id}:\n\`\`\`\n${msg.content}\n\`\`\``);
+			});
+		}
+	}
+});
+
 function writeReminders() {
 	var data = JSON.stringify(reminders);
 	fs.writeFile('./reminders.json', data, 'utf8', err => {
