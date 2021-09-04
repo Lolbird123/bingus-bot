@@ -18,6 +18,10 @@ client.on('ready', () => {
 
 client.on('message', msg => {
 	if(msg.author.bot || msg.channel.type === 'dm') return;
+	if(msg.content === 'Ñ' && msg.channel.id === '763919961579716628' && !msg.member.roles.cache.has('763934710774104104')) {
+        	msg.delete();
+        	msg.channel.send(`<@!${msg.author.id}> dumbass`);
+    	}
 
 	if(msg.content.toLowerCase().includes(prefix)) {
 		var args = msg.content.slice(prefix.length).split(' ');
