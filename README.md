@@ -9,6 +9,9 @@ This repository is for having bingus bot's source code be publicly accessible.
 
 ## Self-Hosting Instructions
 
+**Note:**
+At the moment, the bot does not yet function with discord.js version 13 or higher due to major changes made that are not yet accounted for.
+
 **Requrements:**
 - [Node JS](https://nodejs.dev/)
 - NPM (Install with Node JS)
