@@ -9,9 +9,6 @@ This repository is for having bingus bot's source code be publicly accessible.
 
 ## Self-Hosting Instructions
 
-**Note:**
-At the moment, the bot does not yet function with discord.js version 13 or higher due to major changes made that are not yet accounted for.
-
 **Requrements:**
 - [Node JS](https://nodejs.dev/)
 - NPM (Install with Node JS)
@@ -21,18 +18,19 @@ At the moment, the bot does not yet function with discord.js version 13 or highe
 1. Clone the repository localy
 2. Install the dependencies by running `npm i` in the cloned repository
 3. Configure config.json.
-Config.json example:
+`config.json` example:
 ```
 {
 	"prefix": "b!",
-	"server": "763915967952191538",
-	"channel": "800240312454479893",
+	"intents": ["GUILDS", "GUILD_MESSAGES"],
+	"guild": ""
+	"roles": {
+		"lvl5": "763934710774104104",
+                "citizen": "763934522068303902"
+	}
 	"invite": "https://discord.com/api/oauth2/authorize?client_id=764296101427544084&permissions=8&scope=bot%20applications.commands",
 	"owner": "546768454427082785",
 	"token": "BOT TOKEN HERE",
-	"images": [
-		"https://tenor.com/view/funny-weird-cute-xyze-cat-gif-17440040"
-	]
 }
 ```
 
