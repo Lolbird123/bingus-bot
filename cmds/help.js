@@ -34,7 +34,7 @@ function exec(args, vars) {
 			var embed = new discord.MessageEmbed()
 			.setTitle('Help')
 			.setColor('#00ff00')
-			.setDescription(`Bingus my beloved <3\nSupport server: https://discord.gg/bingus\nDeveloper: <@!${vars.config.owner}>\nSource code: https://github.com/Lolbird123/bingus-bot\nCommands: ${cmds.join(', ')}`);
+			.setDescription(`Bingus my beloved <3\nSupport server: https://discord.gg/bingus\nDeveloper: <@!${vars.config.owner}>\nSource code: https://github.com/Lolbird123/bingus-bot\n\n**Commands:** ${cmds.join(',  ')}`);
 			vars.msg.reply({embeds:[embed]});
 		});
 	}
