@@ -7,7 +7,7 @@ function exec(vars) {
 		vars.msg.channel.send(`<@!${vars.msg.author.id}> dumbass`);
 		vars.msg.delete();
 	}
-	if((comps.includes('nitro') || comps.includes('steam')) && vars.msg.guild.id === vars.config.guild && !vars.msg.member.roles.cache.has(vars.config.roles.lvl5)) {
+	if(comps.includes('nitro') && vars.msg.guild.id === vars.config.guild && !vars.msg.member.roles.cache.has(vars.config.roles.lvl5)) {
 		vars.msg.channel.send(`<@!${vars.msg.author.id}> dumbass`);
                 vars.msg.delete();
 	}
