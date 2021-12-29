@@ -31,4 +31,25 @@ client.on('messageCreate', (msg) => {
 	}
 });
 
+client.on('messageDelete', msg => {
+  if(msg.guild.id === config.guild && msg.attachments.size > 0) {
+    try {
+      client.channels.fetch(config.channels.log).then(c => {
+        var embed = new discord.MessageEmbed();
+        var files = [];
+
+        msg.attachments.forEach(a => {
+          files.push(`https://cdn.discordapp.com/attachments/${msg.channel.id}/${a.id}/${a.name}`);
+        });
+        embed.setTitle(`Deleted message (${msg.id}) from ${msg.author.tag} (${msg.author.id}) attachments:`);
+        embed.setColor('#ff0000');
+        embed.setDescription(`\`\`\`\n${files.join('\n')}\n\`\`\``);
+        c.send({embeds: [embed]});
+      });
+    } catch(err) {
+      console.error(err);
+    }
+  }
+})
+
 client.login(config.token);
