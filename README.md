@@ -23,7 +23,10 @@ This repository is for having bingus bot's source code be publicly accessible.
 {
 	"prefix": "b!",
 	"intents": ["GUILDS", "GUILD_MESSAGES"],
-	"guild": ""
+	"guild": "",
+	"channels": {
+		"log": "766902515543179286"
+	},
 	"roles": {
 		"lvl5": "763934710774104104",
                 "citizen": "763934522068303902"
