@@ -15,7 +15,7 @@ function exec(vars) {
   //the funny words are stored in config
   if(vars.msg.guild.id === vars.config.guild) {
     for(var i=0; i<vars.config.words.length; i++) {
-      if(comps.includes(vars.config.words[i]) {
+      if(comps.includes(vars.config.words[i])) {
         vars.msg.channel.send(`<@!${vars.msg.author.id}> check your roles uwu`);
         vars.msg.member.roles.add(vars.config.roles.uwu);
       }
