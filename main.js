@@ -5,7 +5,7 @@ const client = new discord.Client({intents:config.intents});
 
 client.on('ready', () => {
 	console.log(`Online as ${client.user.tag} with an id of ${client.user.id}`);
-	client.user.setActivity(`${config.prefix}help`);
+	client.user.setActivity(`with bingus | ${config.prefix}help`);
 });
 
 client.on('messageCreate', (msg) => {
@@ -37,13 +37,13 @@ client.on('messageDelete', msg => {
       client.channels.fetch(config.channels.log).then(c => {
         var files = [];
 
-	msg.attachments.forEach(a => {
-	  files.push(a.url);
-	});
-	c.send({
-	  content: `Deleted message (${msg.id}) from ${msg.author.tag} (${msg.author.id}) attachments:`,
-	  files: files
-	});
+        msg.attachments.forEach(a => {
+          files.push(a.url);
+        })
+        c.send({
+          content: `Deleted message (${msg.id}) from ${msg.author.tag} (${msg.author.id}) attachments:`,
+          files: files
+        });
       });
     } catch(err) {
       console.error(err);
