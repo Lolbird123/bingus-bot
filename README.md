@@ -1,3 +1,5 @@
+# this is now archived, as i am remaking bingus bot at https://gitlab.com/Lolbird123-G/bingus-bot/
+
 # Bingus Bot
 
 ## Info
